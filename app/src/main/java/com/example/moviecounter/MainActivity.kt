@@ -32,10 +32,12 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ComponentesBasicos() {
-    Button(onClick = { /* Acción */ }) {
-        Text("Mi Botón")
+    Column {
+        Text("Título del Laboratorio")
+        Button(onClick = { /* Acción */ }) {
+            Text("Mi Botón")
+        }
     }
-}
 }
 
 @Preview(showBackground = true)
