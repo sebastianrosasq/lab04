@@ -45,26 +45,17 @@ fun MovieCounter(modifier: Modifier = Modifier) {
         modifier = modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (count > 0) {
-            Text("Has agregado $count películas.")
-        } else {
-            Text("No has agregado películas aún.")
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Button(
-            onClick = { count++ },
-            enabled = count < 10
-        ) {
-            Text("Agregar película")
+        Text(text = "You have added $count movies.")
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = { count++ }) {
+            Text("Add Movie")
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun MovieCounterPreview() {
+fun PreviewMovieCounter() {
     MovieCounterTheme {
         MovieCounter()
     }
