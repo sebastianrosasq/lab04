@@ -34,6 +34,7 @@ class MainActivity : ComponentActivity() {
 fun ComponentesBasicos() {
     Column {
         Text("Título del Laboratorio")
+        Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = { /* Acción */ }) {
             Text("Mi Botón")
         }
