@@ -32,18 +32,41 @@ class MainActivity : ComponentActivity() {
         setContent {
             MovieCounterTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MovieCounter(modifier = Modifier.padding(innerPadding))
+                    StatefulMovieCounter(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
     }
 }
 
+// Componente Stateful (Gestiona el estado)
 @Composable
-fun MovieCounter(modifier: Modifier = Modifier) {
+fun StatefulMovieCounter(modifier: Modifier = Modifier) {
     var count by rememberSaveable { mutableStateOf(0) }
     var movieName by rememberSaveable { mutableStateOf("") }
 
+    StatelessMovieCounter(
+        count = count,
+        movieName = movieName,
+        onMovieNameChange = { movieName = it },
+        onAddMovie = {
+            if (movieName.isNotBlank()) {
+                count++
+                movieName = ""
+            }
+        },
+        modifier = modifier
+    )
+}
+
+@Composable
+fun StatelessMovieCounter(
+    count: Int,
+    movieName: String,
+    onMovieNameChange: (String) -> Unit,
+    onAddMovie: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -58,7 +81,7 @@ fun MovieCounter(modifier: Modifier = Modifier) {
 
         OutlinedTextField(
             value = movieName,
-            onValueChange = { movieName = it },
+            onValueChange = onMovieNameChange,
             label = { Text("Nombre de la película") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -66,12 +89,7 @@ fun MovieCounter(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = {
-                if (movieName.isNotBlank()) {
-                    count++
-                    movieName = ""
-                }
-            },
+            onClick = onAddMovie,
             enabled = count < 10,
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -84,6 +102,6 @@ fun MovieCounter(modifier: Modifier = Modifier) {
 @Composable
 fun PreviewMovieCounter() {
     MovieCounterTheme {
-        MovieCounter()
+        StatefulMovieCounter()
     }
 }
